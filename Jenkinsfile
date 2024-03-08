@@ -24,7 +24,7 @@ pipeline {
             steps {
                 echo "Building the Docker image..."
                 sleep 3
-                sh "docker build -t $DOCKER_IMAGE ."
+                sh "docker build -t $DOCKER_USER/$DOCKER_IMAGE ."
                 sh "docker push $DOCKER_USER/$DOCKER_IMAGE"
             }
         }
