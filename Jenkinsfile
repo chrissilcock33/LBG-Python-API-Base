@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                echo "building..."
                 sh '''
                   sh "pwd"
                   sh "ls -a"
