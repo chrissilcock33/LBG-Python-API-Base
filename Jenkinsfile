@@ -4,6 +4,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
+                  sh "pwd"
+                  sh "ls -a"
                   sh "sh setup.sh"
                 '''
            }
