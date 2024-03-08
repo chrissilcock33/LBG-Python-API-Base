@@ -41,7 +41,7 @@ pipeline {
                 sh "docker ps -a"
                 sh "docker run -d -p 80:$PORT -e PORT=$PORT $DOCKER_USER/$DOCKER_IMAGE"
                 sh "docker ps -a"
-
+                echo "done"
             }
         }
     }
