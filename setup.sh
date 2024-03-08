@@ -10,6 +10,7 @@ cleanup() {
     echo "Cleaning up previous build artifacts..."
     sleep 3
     # Add commands to clean up previous build artifacts
+    docker stop $(docker ps -q) || true
     docker rm -f $(docker ps -aq) || true
     docker rmi -f $(docker images) || true
     echo "Cleanup done."
@@ -35,7 +36,7 @@ modify_app() {
 run_docker() {
     echo "Running Docker container..."
     sleep 3
-    docker run -d -p 8080:$PORT -e PORT=$PORT $DOCKER_IMAGE
+    docker run -d -p 80:$PORT -e PORT=$PORT $DOCKER_IMAGE
 }
 
 # Main script execution
