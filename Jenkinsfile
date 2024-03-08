@@ -27,15 +27,18 @@ pipeline {
                 sh "docker build -t $DOCKER_IMAGE ."
                 sh "docker push $DOCKER_USER/$DOCKER_IMAGE"
             }
+        }
         stage('modify') {
+            steps {
                 echo "Modifying the application..."
                 sleep 3
                 sh "export PORT=$PORT"
                 echo "Modifications done. Port is now set to $PORT"
         }
-
+        }
         stage('Deploy') {
             steps {
+                sh "docker ps -a"
                 sh "docker run -d -p 80:$PORT $DOCKER_USER/$DOCKER_IMAGE"
             }
         }
