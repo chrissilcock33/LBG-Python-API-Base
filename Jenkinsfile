@@ -32,8 +32,8 @@ pipeline {
             steps {
                 echo "Modifying the application..."
                 sleep 3
-                sh "export PORT=$PORT"
-                echo "Modifications done. Port is now set to $PORT"
+                echo "Modifications done."
+                echo "Doing a thing"
         }
         }
         stage('Deploy') {
