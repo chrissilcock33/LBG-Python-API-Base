@@ -1,31 +1,18 @@
 pipeline {
     agent any
     environment {
-        //DOCKER_IMAGE = "lbg"
-        //DOCKER_USER = "chrissilcock33"
-        //PORT = 5001
-        GCR_CREDENTIALS_ID = 'jenkins-gcr' // The ID you provided in Jenkins credentials
-        //chris-s-storage-admin@lbg-mea-17.iam.gserviceaccount.com
-
+        GCR_CREDENTIALS_ID = 'jenkins-gcr'
         IMAGE_NAME = 'chris-s-lbg'
         GCR_URL = 'gcr.io/lbg-mea-17'
+        PROJECT_ID = 'lbg-mea-17'
+        CLUSTER_NAME = 'chris-s-week3-project-cluster'
+        LOCATION = 'europe-west2-c'
+        CREDENTIALS_ID = 'jenkins-k8s'
     }
     stages {
-        // stage('Cleanup') {
-        //     steps {
-        //         //echo "Building..."
-        //         //sh "sh setup.sh"
-        //         echo "Cleaning up previous build artifacts..."
-        //         sleep 3
-               
-        //         sh "docker ps -a"
-        //         sh "docker stop \$(docker ps -q) || sleep 1"
-        //         sh "docker rm \$(docker ps -qa) || sleep 1"
-        //         echo "Cleanup done."
-        //    }
-        // }
 
         stage('Build and Push to GCP') {
+
             steps {
                 echo "Auth to GCP"
                 withCredentials([file(credentialsId: GCR_CREDENTIALS_ID, variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
@@ -50,14 +37,16 @@ pipeline {
                 echo "Doing a thing"
         }
         }
-        stage('Deploy') {
+        stage('Deploy to GKE') {
+
             steps {
-                // sh "docker ps -a"
-                // sh "docker run -d -p 80:$PORT -e PORT=$PORT $DOCKER_USER/$DOCKER_IMAGE"
-                // sh "docker ps -a"
-                echo "done"
+
+                script {
+
+                    // Deploy to GKE using Jenkins Kubernetes Engine Plugin
+                    step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'kubernetes/deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+                }
             }
         }
     }
 }
-
