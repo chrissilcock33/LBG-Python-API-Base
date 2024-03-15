@@ -3,7 +3,7 @@ pipeline {
     environment {
         GCR_CREDENTIALS_ID = 'jenkins-gcr'
         IMAGE_NAME = 'chris-s-lbg'
-        GCR_URL = 'gcr.io/lbg-mea-17'
+        GCR_URL = 'eu.gcr.io/lbg-mea-17'
         PROJECT_ID = 'lbg-mea-17'
         CLUSTER_NAME = 'chris-s-week3-project-cluster'
         LOCATION = 'europe-west2-c'
