@@ -42,21 +42,21 @@ pipeline {
                 sh "docker push ${GCR_URL}/${IMAGE_NAME}:${BUILD_NUMBER}"
             }
         }
-        // stage('modify') {
-        //     steps {
-        //         echo "Modifying the application..."
-        //         sleep 3
-        //         echo "Modifications done."
-        //         echo "Doing a thing"
-        // }
-        // }
-        // stage('Deploy') {
-        //     steps {
-        //         sh "docker ps -a"
-        //         sh "docker run -d -p 80:$PORT -e PORT=$PORT $DOCKER_USER/$DOCKER_IMAGE"
-        //         sh "docker ps -a"
-        //         echo "done"
-        //     }
+        stage('modify') {
+            steps {
+                echo "Modifying the application..."
+                sleep 3
+                echo "Modifications done."
+                echo "Doing a thing"
+        }
+        }
+        stage('Deploy') {
+            steps {
+                // sh "docker ps -a"
+                // sh "docker run -d -p 80:$PORT -e PORT=$PORT $DOCKER_USER/$DOCKER_IMAGE"
+                // sh "docker ps -a"
+                echo "done"
+            }
         }
     }
 
